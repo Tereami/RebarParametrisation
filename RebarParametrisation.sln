@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RebarParametrisation", "RebarParametrisation\RebarParametrisation.csproj", "{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		R2017|Any CPU = R2017|Any CPU
+		R2018|Any CPU = R2018|Any CPU
+		R2019|Any CPU = R2019|Any CPU
+		R2020|Any CPU = R2020|Any CPU
+		R2021|Any CPU = R2021|Any CPU
+		R2022|Any CPU = R2022|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2017|Any CPU.ActiveCfg = R2017|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2017|Any CPU.Build.0 = R2017|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2018|Any CPU.ActiveCfg = R2018|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2018|Any CPU.Build.0 = R2018|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2019|Any CPU.ActiveCfg = R2019|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2019|Any CPU.Build.0 = R2019|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2020|Any CPU.ActiveCfg = R2020|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2020|Any CPU.Build.0 = R2020|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2021|Any CPU.ActiveCfg = R2021|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2021|Any CPU.Build.0 = R2021|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2022|Any CPU.ActiveCfg = R2022|Any CPU
+		{5D9B8239-D4E8-49A7-A4B3-540DF13B3069}.R2022|Any CPU.Build.0 = R2022|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2E2B35DF-FFBA-4CD6-A438-F64E0757203E}
+	EndGlobalSection
+EndGlobal
