@@ -161,8 +161,7 @@ namespace RebarParametrisation
                     }
                     catch
                     {
-                        Autodesk.Revit.UI.TaskDialog.Show("Предупреждение", "Некорректное размещение элементов: \""
-                            + elem1.Name + "\" id: " + elem1.Id.IntegerValue.ToString() + ", \"" + elem2.Name + "\" id: " + elem2.Id.IntegerValue.ToString());
+                        Autodesk.Revit.UI.TaskDialog.Show("Предупреждение", $"Некорректное размещение элементов: {elem1.Name} id: {elem1.GetElementId()} , {elem2.Name} id: {elem2.GetElementId()}");
                         return IntersectionResult.Incorrect;
                     }
                     if (check) return IntersectionResult.Intersection;

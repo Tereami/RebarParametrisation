@@ -135,9 +135,6 @@ namespace RebarParametrisation
             Parameter param = elem.LookupParameter(ParameterName);
             if (param != null) return param;
 
-            string oldSharedParamsFile = app.SharedParametersFilename;
-
-            app.SharedParametersFilename = @"\\picompany.ru\pikp\lib\_CadSettings\02_Revit\04. Shared Parameters\SP-ALL-PIC.txt";
 
             ExternalDefinition exDef = null;
             string sharedFile = app.SharedParametersFilename;
@@ -175,7 +172,6 @@ namespace RebarParametrisation
             doc.Regenerate();
 
 
-            app.SharedParametersFilename = oldSharedParamsFile;
             param = elem.LookupParameter(ParameterName);
             if (param == null) throw new Exception("Не удалось добавить обший параметр " + ParameterName);
 
@@ -249,8 +245,7 @@ namespace RebarParametrisation
                 HashSet<string> hostIds = new HashSet<string>();
                 foreach (Element hostElem in hostElements)
                 {
-                    ElementId hostId = hostElem.Id;
-                    string tempid = hostId.IntegerValue.ToString();
+                    string tempid = hostElem.GetElementId().ToString();
                     hostIds.Add(tempid);
                 }
                 Parameter rebarHostIdParam = RebarParametrisation.ParametersSupport.CheckAndAddSharedParameter(rebar, revitApp, rebarCatSet, "BDS_RebarHostId", BuiltInParameterGroup.INVALID, true);
@@ -279,7 +274,7 @@ namespace RebarParametrisation
                     string tempMark = hostMarkParam.AsString();
                     if (string.IsNullOrEmpty(tempMark))
                     {
-                        return "Не заполнена марка у конструкции: " + hostElem.Id.IntegerValue.ToString() + " в файле " + hostElem.Document.Title;
+                        return $"Не заполнена марка у конструкции: {hostElem.GetElementId()} в файле {hostElem.Document.Title}";
                     }
                     else
                     {

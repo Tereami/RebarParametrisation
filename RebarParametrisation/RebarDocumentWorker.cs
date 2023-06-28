@@ -123,7 +123,7 @@ namespace RebarParametrisation
 
             if (Settings.UseHostMark && MainElementsForLibFile == null)
             {
-                string errorIds = "";
+                List<long> errorIds = new List<long>();
                 foreach (Element elem in concreteElements)
                 {
                     Parameter markParam = elem.get_Parameter(BuiltInParameter.ALL_MODEL_MARK);
@@ -131,12 +131,12 @@ namespace RebarParametrisation
                     string tempMark = markParam.AsString();
                     if (string.IsNullOrEmpty(tempMark))
                     {
-                        errorIds += elem.Id.IntegerValue.ToString() + "; ";
+                        errorIds.Add(elem.GetElementId());
                     }
                 }
-                if (errorIds != "")
+                if (errorIds.Count > 0)
                 {
-                    string msg = "Не заполнена Марка у конструкций: " + errorIds;
+                    string msg = "Не заполнена Марка у конструкций: " + string.Join(", ", errorIds);
                     return msg;
                 }
             }
@@ -233,7 +233,7 @@ namespace RebarParametrisation
                     ParentFamilyContainer pfc = kvp.Value;
                     FamilyInstance parentFamily = pfc.parentFamily;
 
-                    Dictionary<int, Element> hostElemsBase = new Dictionary<int, Element>();
+                    Dictionary<long, Element> hostElemsBase = new Dictionary<long, Element>();
 
                     List<Element> mainHostElems = null;
 
@@ -254,7 +254,7 @@ namespace RebarParametrisation
                             {
                                 Element hostElem = Intersection.GetHostElementForIfcRebar(doc, defaultView3d, nestedRebar, concreteElements, linkTransform);
                                 if (hostElem == null) continue;
-                                int hostElemId = hostElem.Id.IntegerValue;
+                                long hostElemId = hostElem.GetElementId();
                                 if (!hostElemsBase.ContainsKey(hostElemId))
                                 {
                                     hostElemsBase.Add(hostElemId, hostElem);
@@ -290,7 +290,7 @@ namespace RebarParametrisation
                             string tempHostMark = hostMarkParam.AsString();
                             if (string.IsNullOrEmpty(tempHostMark))
                             {
-                                return "Не заполнена марка у конструкции: " + mainHostElem.Id.IntegerValue.ToString() + " в файле " + mainHostElem.Document.Title;
+                                return $"Не заполнена марка у конструкции: {mainHostElem.GetElementId()} в файле {mainHostElem.Document.Title}";
                             }
 
                             if (hostMark != "") hostMark += "|";

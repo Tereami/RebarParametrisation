@@ -174,7 +174,7 @@ namespace RebarParametrisation
             if (rebarClass == 240) return 215;
             if (rebarClass == 400) return 355;
             if (rebarClass == 500) return 435;
-            throw new Exception("Некорректный класс арматуры " + rebarClass.ToString() + " у элемента id:" + elem.Id.IntegerValue.ToString());
+            throw new Exception($"Некорректный класс арматуры {rebarClass} у элемента id: {elem.GetElementId()}");
         }
 
         private double GetRbt(double concreteClass)

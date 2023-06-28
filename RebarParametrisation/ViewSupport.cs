@@ -55,7 +55,7 @@ namespace RebarParametrisation
                         }
                         catch
                         {
-                            throw new Exception("Не удалось установить высокий уровень детализации для вида " + view.Name + " id: " + view.Id.IntegerValue.ToString());
+                            throw new Exception($"Не удалось установить высокий уровень детализации для вида {view.Name} id: {view.GetElementId()}");
                         }
 
                         t.Commit();

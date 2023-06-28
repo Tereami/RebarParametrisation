@@ -27,13 +27,13 @@ namespace RebarParametrisation
     {
         public Element hostElement;
         public FamilyInstance parentFamily;
-        public int parentFamilyId;
+        public long parentFamilyId;
         public List<FamilyInstance> childFamilies;
 
         public ParentFamilyContainer(FamilyInstance ParentFamily, FamilyInstance FirstNestedFamily)
         {
             parentFamily = ParentFamily;
-            parentFamilyId = ParentFamily.Id.IntegerValue;
+            parentFamilyId = ParentFamily.GetElementId();
             childFamilies = new List<FamilyInstance>() { FirstNestedFamily };
         }
 
