@@ -33,7 +33,7 @@ namespace RebarParametrisation
         public ParentFamilyContainer(FamilyInstance ParentFamily, FamilyInstance FirstNestedFamily)
         {
             parentFamily = ParentFamily;
-            parentFamilyId = ParentFamily.GetElementId();
+            parentFamilyId = ParentFamily.Id.GetElementId();
             childFamilies = new List<FamilyInstance>() { FirstNestedFamily };
         }
 

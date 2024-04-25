@@ -129,7 +129,13 @@ namespace RebarParametrisation
         /// <param name="paramGroup"></param>
         /// <param name="SetVaryByGroups"></param>
         /// <returns></returns>
-        public static Parameter CheckAndAddSharedParameter(Element elem, Application app, CategorySet catset, string ParameterName, BuiltInParameterGroup paramGroup, bool SetVaryByGroups)
+        public static Parameter CheckAndAddSharedParameter(Element elem, Application app, CategorySet catset, string ParameterName,
+#if R2017 || R2018 || R2019 || R2020 || R2021 || R2022 || R2023
+            BuiltInParameterGroup paramGroup, 
+#else
+            ForgeTypeId paramGroup,
+#endif
+            bool SetVaryByGroups)
         {
             Document doc = elem.Document;
             Parameter param = elem.LookupParameter(ParameterName);
@@ -240,15 +246,21 @@ namespace RebarParametrisation
         /// <param name="hostElem"></param>
         public static string WriteHostInfoSingleRebar(Autodesk.Revit.ApplicationServices.Application revitApp, CategorySet rebarCatSet, Element rebar, List<Element> hostElements)
         {
+#if R2017 || R2018 || R2019 || R2020 || R2021 || R2022 || R2023
+            BuiltInParameterGroup invalidParamGroup = BuiltInParameterGroup.INVALID;
+#else
+            ForgeTypeId invalidParamGroup = new ForgeTypeId(string.Empty);
+#endif
+
             if (Settings.UseHostId)
             {
                 HashSet<string> hostIds = new HashSet<string>();
                 foreach (Element hostElem in hostElements)
                 {
-                    string tempid = hostElem.GetElementId().ToString();
+                    string tempid = hostElem.Id.GetElementId().ToString();
                     hostIds.Add(tempid);
                 }
-                Parameter rebarHostIdParam = RebarParametrisation.ParametersSupport.CheckAndAddSharedParameter(rebar, revitApp, rebarCatSet, "BDS_RebarHostId", BuiltInParameterGroup.INVALID, true);
+                Parameter rebarHostIdParam = RebarParametrisation.ParametersSupport.CheckAndAddSharedParameter(rebar, revitApp, rebarCatSet, "BDS_RebarHostId", invalidParamGroup, true);
                 string hostIdString = ConvertHashsetToString(hostIds);
                 rebarHostIdParam.Set(hostIdString);
             }
@@ -260,7 +272,7 @@ namespace RebarParametrisation
                     hostUniqIds.Add(hostElem.UniqueId);
                 }
 
-                Parameter rebarHostUniqueIdParam = RebarParametrisation.ParametersSupport.CheckAndAddSharedParameter(rebar, revitApp, rebarCatSet, "BDS_RebarUniqueHostId", BuiltInParameterGroup.INVALID, true);
+                Parameter rebarHostUniqueIdParam = RebarParametrisation.ParametersSupport.CheckAndAddSharedParameter(rebar, revitApp, rebarCatSet, "BDS_RebarUniqueHostId", invalidParamGroup, true);
                 string hostUniqueId = ConvertHashsetToString(hostUniqIds);
                 rebarHostUniqueIdParam.Set(hostUniqueId);
             }
@@ -274,7 +286,7 @@ namespace RebarParametrisation
                     string tempMark = hostMarkParam.AsString();
                     if (string.IsNullOrEmpty(tempMark))
                     {
-                        return $"Не заполнена марка у конструкции: {hostElem.GetElementId()} в файле {hostElem.Document.Title}";
+                        return $"Не заполнена марка у конструкции: {hostElem.Id} в файле {hostElem.Document.Title}";
                     }
                     else
                     {

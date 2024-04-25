@@ -93,7 +93,7 @@ namespace RebarParametrisation
             foreach (FamilyInstance nestedRebar in rebarsIfcNested)
             {
                 FamilyInstance parentFamily = ParentFamilyContainer.GetMainParentFamily(nestedRebar);
-                int parentId = parentFamily.Id.IntegerValue;
+                int parentId = parentFamily.Id.GetElementId();
                 if (parentFamiliesBase.ContainsKey(parentId))
                 {
                     parentFamiliesBase[parentId].childFamilies.Add(nestedRebar);
@@ -131,7 +131,7 @@ namespace RebarParametrisation
                     string tempMark = markParam.AsString();
                     if (string.IsNullOrEmpty(tempMark))
                     {
-                        errorIds.Add(elem.GetElementId());
+                        errorIds.Add(elem.Id.GetElementId());
                     }
                 }
                 if (errorIds.Count > 0)
@@ -156,23 +156,28 @@ namespace RebarParametrisation
                     MyRebar myrebar = new MyRebar(elem);
 
                     if (!myrebar.IsValid) continue;
+#if R2017 || R2018 || R2019 || R2020 || R2021 || R2022 || R2023
+                    BuiltInParameterGroup invalidParamGroup = BuiltInParameterGroup.INVALID;
+#else
+                    ForgeTypeId invalidParamGroup = new ForgeTypeId(string.Empty);
+#endif
 
                     if (Settings.UseRebarWeight)
                     {
-                        Parameter paramWeight = ParametersSupport.CheckAndAddSharedParameter(elem, revitApp, rebarCatSet, "BDS_Weight", BuiltInParameterGroup.INVALID, true);
+                        Parameter paramWeight = ParametersSupport.CheckAndAddSharedParameter(elem, revitApp, rebarCatSet, "BDS_Weight", invalidParamGroup, true);
                         paramWeight.Set(myrebar.weightFinal);
                     }
 
                     if (Settings.UseRebarLength)
                     {
-                        Parameter paramLength = ParametersSupport.CheckAndAddSharedParameter(elem, revitApp, rebarCatSet, "BDS_Length", BuiltInParameterGroup.INVALID, true);
+                        Parameter paramLength = ParametersSupport.CheckAndAddSharedParameter(elem, revitApp, rebarCatSet, "BDS_Length", invalidParamGroup, true);
                         paramLength.Set(myrebar.lengthMm);
 
                     }
 
                     if (Settings.UseRebarDiameter)
                     {
-                        Parameter diamParam = ParametersSupport.CheckAndAddSharedParameter(elem, revitApp, rebarCatSet, "BDS_Diameter", BuiltInParameterGroup.INVALID, true);
+                        Parameter diamParam = ParametersSupport.CheckAndAddSharedParameter(elem, revitApp, rebarCatSet, "BDS_Diameter", invalidParamGroup, true);
                         diamParam.Set(myrebar.diameterMm);
                     }
                 }
@@ -254,7 +259,7 @@ namespace RebarParametrisation
                             {
                                 Element hostElem = Intersection.GetHostElementForIfcRebar(doc, defaultView3d, nestedRebar, concreteElements, linkTransform);
                                 if (hostElem == null) continue;
-                                long hostElemId = hostElem.GetElementId();
+                                long hostElemId = hostElem.Id.GetElementId();
                                 if (!hostElemsBase.ContainsKey(hostElemId))
                                 {
                                     hostElemsBase.Add(hostElemId, hostElem);
@@ -290,7 +295,7 @@ namespace RebarParametrisation
                             string tempHostMark = hostMarkParam.AsString();
                             if (string.IsNullOrEmpty(tempHostMark))
                             {
-                                return $"Не заполнена марка у конструкции: {mainHostElem.GetElementId()} в файле {mainHostElem.Document.Title}";
+                                return $"Не заполнена марка у конструкции id: {mainHostElem.Id} в файле {mainHostElem.Document.Title}";
                             }
 
                             if (hostMark != "") hostMark += "|";
